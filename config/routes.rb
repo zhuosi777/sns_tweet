@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   root "tweets#index"
   resources :tweets
   get   'users/:id'   =>  'users#show'
+  patch   'tweets/:id'  => 'tweets#update'
 end
