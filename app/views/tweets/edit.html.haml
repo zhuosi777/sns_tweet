@@ -1,8 +1,8 @@
 .contents.row
   .container
-    = form_with url: '/tweets' do |f|
+    = form_with modle: @tweet do |f|
       %h3
-        投稿する
+        編集する
       = f.label :image, class: 'container__mask__image' do
         = fa_icon 'picture-o', class: 'icon'
         = f.file_field :image, class: 'hidden'

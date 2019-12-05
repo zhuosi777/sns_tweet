@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-
+  before_action :set_tweet, only: [:edit, :update, :show, :destroy]
   before_action :move_to_index, except: [:index, :show]
 
   def index
@@ -19,29 +19,33 @@ class TweetsController < ApplicationController
 end
 
   def destroy
-    tweet = Tweet.find(params[:id])
-    tweet.destroy if tweet.user_id == current_user.id
+    @tweet.destroy if @tweet.user_id == current_user.id
   end
 
   def edit
-    @tweet = Tweet.find(params[:id])
+    if user_signed_in? && current_user.id == @tweet.user_id
+    else user_signed_in?
+      redirect_to(root_path)
+    end
   end
 
   def update
-    tweet = Tweet.find(params[:id])
-    if tweet.user_id == current_user.id
-      tweet.update(tweet_params)
+    if @tweet.update(tweet_params)
+      redirect_to(tweet_path)
     end
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
     @comments = @tweet.comments.includes(:user)
   end
 
   private
   def tweet_params
     params.permit(:image, :text).merge(user_id: current_user.id)
+  end
+
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
   end
 
   def move_to_index
