@@ -1,8 +1,10 @@
 .contents.row
   .container
-    = form_tag('/tweets', method: :post) do
+    = form_with url: '/tweets' do |f|
       %h3
         投稿する
-      %input{:autofocus => "true", :name => "image", :placeholder => "Image URL", :type => "text"}/
-      %textarea{:cols => "30", :name => "text", :placeholder => "text", :rows => "10"}
-      %input{:type => "submit", :value => "SENT"}/
+      = f.label :image, class: 'container__mask__image' do
+        = fa_icon 'picture-o', class: 'icon'
+        = f.file_field :image, class: 'hidden'
+      = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+      = f.submit 'Send', class: 'form__submit'
