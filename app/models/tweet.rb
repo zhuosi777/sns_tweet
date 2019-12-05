@@ -1,5 +1,5 @@
 class Tweet < ApplicationRecord
 
   belongs_to :user
-  has_manuy :comments
+  has_many :comments
 end
