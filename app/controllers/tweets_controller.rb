@@ -14,7 +14,7 @@ class TweetsController < ApplicationController
     if @tweet.save
     redirect_to root_path
     else
-      render new
+      render 'new'
   end
 end
 
@@ -31,10 +31,11 @@ end
   end
 
   def update
-    if @tweet.update(tweet_params)
-      redirect_to(tweet_path)
-    end
+    @tweet = Tweet.find(params[:id])
+    if @tweet.user_id == current_user.id
+      @tweet.update(tweet_params)
   end
+end
 
   def show
     @comments = @tweet.comments.includes(:user)
