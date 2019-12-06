@@ -24,6 +24,7 @@ end
 
   def edit
     if user_signed_in? && current_user.id == @tweet.user_id
+      @tweet = Tweet.find(params[:id])
     else user_signed_in?
       redirect_to(root_path)
     end
